@@ -1,58 +1,57 @@
-import { carService } from './services/car.service.js'
+import { stayService } from './services/stay.service.js'
 import { userService } from './services/user.service.js'
 import { utilService } from './services/util.service.js'
 
 console.log('Simple driver to test some API calls')
 
-window.onLoadCars = onLoadCars
+window.onLoadStays = onLoadStays
 window.onLoadUsers = onLoadUsers
-window.onAddCar = onAddCar
-window.onGetCarById = onGetCarById
-window.onRemoveCar = onRemoveCar
-window.onAddCarMsg = onAddCarMsg
+window.onAddStay = onAddStay
+window.onGetStayById = onGetStayById
+window.onRemoveStay = onRemoveStay
+window.onAddStayMsg = onAddStayMsg
 
-async function onLoadCars() {
-    const cars = await carService.query()
-    render('Cars', cars)
+async function onLoadStays() {
+  const stays = await stayService.query()
+  render('Stays', stays)
 }
 async function onLoadUsers() {
-    const users = await userService.query()
-    render('Users', users)
+  const users = await userService.query()
+  render('Users', users)
 }
 
-async function onGetCarById() {
-    const id = prompt('Car id?')
-    if (!id) return
-    const car = await carService.getById(id)
-    render('Car', car)
+async function onGetStayById() {
+  const id = prompt('Stay id?')
+  if (!id) return
+  const stay = await stayService.getById(id)
+  render('Stay', stay)
 }
 
-async function onRemoveCar() {
-    const id = prompt('Car id?')
-    if (!id) return
-    await carService.remove(id)
-    render('Removed Car')
+async function onRemoveStay() {
+  const id = prompt('Stay id?')
+  if (!id) return
+  await stayService.remove(id)
+  render('Removed Stay')
 }
 
-async function onAddCar() {
-    await userService.login({ username: 'puki', password: '123' })
-    const savedCar = await carService.save(carService.getEmptyCar())
-    render('Saved Car', savedCar)
+async function onAddStay() {
+  await userService.login({ username: 'puki', password: '123' })
+  const savedStay = await stayService.save(stayService.getEmptyStay())
+  render('Saved Stay', savedStay)
 }
 
-async function onAddCarMsg() {
-    await userService.login({ username: 'puki', password: '123' })
-    const id = prompt('Car id?')
-    if (!id) return
+async function onAddStayMsg() {
+  await userService.login({ username: 'puki', password: '123' })
+  const id = prompt('Stay id?')
+  if (!id) return
 
-    const savedMsg = await carService.addCarMsg(id, 'some msg')
-    render('Saved Msg', savedMsg)
+  const savedMsg = await stayService.addStayMsg(id, 'some msg')
+  render('Saved Msg', savedMsg)
 }
 
 function render(title, mix = '') {
-    console.log(title, mix)
-    const output = utilService.prettyJSON(mix)
-    document.querySelector('h2').innerText = title
-    document.querySelector('pre').innerHTML = output
+  console.log(title, mix)
+  const output = utilService.prettyJSON(mix)
+  document.querySelector('h2').innerText = title
+  document.querySelector('pre').innerHTML = output
 }
-
