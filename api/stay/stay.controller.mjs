@@ -21,6 +21,7 @@ export async function getStayById(req, res) {
     const stayId = req.params.id
     const stay = await stayService.getById(stayId)
     res.json(stay)
+    console.log('stay from controller' , stay)
   } catch (err) {
     logger.error('Failed to get stay', err)
     res.status(400).send({ err: 'Failed to get stay' })
