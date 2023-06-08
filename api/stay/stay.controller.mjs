@@ -4,6 +4,7 @@ import {logger} from '../../services/logger.service.mjs'
 export async function getStays(req, res) {
   try {
     logger.debug('Getting Stays:', req.query)
+    console.log('Getting Stays:')
     const filterBy = {
       txt: req.query.txt || '',
       // pageIdx: req.query.pageIdx
@@ -19,6 +20,7 @@ export async function getStays(req, res) {
 export async function getStayById(req, res) {
   try {
     const stayId = req.params.id
+    console.log('stayId:', stayId)
     const stay = await stayService.getById(stayId)
     res.json(stay)
   } catch (err) {
