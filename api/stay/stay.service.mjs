@@ -7,10 +7,31 @@ const { ObjectId } = mongodb
 
 const PAGE_SIZE = 3
 
+// function _buildCriteria(filterBy) {
+//   const criteria = {}
+//   if (filterBy.txt) {
+//      criteria.name= { $regex: filterBy.location, $options: 'i' }
+//   }
+//   if(filterBy.location){
+//     criteria['loc.city']= { $regex: filterBy.location, $options: 'i' }
+//     criteria['loc.country']= { $regex: filterBy.location, $options: 'i' }
+//   if (filterBy.guests) {
+//     criteria.capacity = { $lte: filterBy.guests }
+//   }
+//   }
+//   return criteria
+// }
+
 async function query(filterBy) {
+  console.log('filterBy:', filterBy)
   try {
     const criteria = {
-      // vendor: { $regex: filterBy.txt, $options: 'i' }
+      name: { $regex: filterBy.txt, $options: 'i' },
+      $or: [
+        { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
+        { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
+      ]
+
     }
     const collection = await dbService.getCollection('stay')
     var stayCursor = await collection.find(criteria)
@@ -20,6 +41,7 @@ async function query(filterBy) {
     // }
 
     const stays = await stayCursor.toArray()
+    console.log('stays:', stays)
     return stays
   } catch (err) {
     logger.error('cannot find stays', err)
@@ -29,10 +51,10 @@ async function query(filterBy) {
 
 async function getById(stayId) {
   try {
-    
+
     const collection = await dbService.getCollection('stay')
-    const stay = collection.findOne({ _id: ObjectId ( stayId) })
-     return stay
+    const stay = collection.findOne({ _id: ObjectId(stayId) })
+    return stay
   } catch (err) {
     logger.error(`while finding stay ${stayId}`, err)
     throw err
@@ -107,6 +129,8 @@ async function removeStayMsg(stayId, msgId) {
     throw err
   }
 }
+
+
 
 export const stayService = {
   remove,

@@ -5,10 +5,15 @@ export async function getStays(req, res) {
   try {
     logger.debug('Getting Stays:', req.query)
     console.log('Getting Stays:')
+    console.log('req.query:', req.query)
+
     const filterBy = {
       txt: req.query.txt || '',
+      location: req.query.location || ''
+      // guests: +req.query.guests || 0,
       // pageIdx: req.query.pageIdx
     }
+
     const stays = await stayService.query(filterBy)
     res.json(stays)
   } catch (err) {
