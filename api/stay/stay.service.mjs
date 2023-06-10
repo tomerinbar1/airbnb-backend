@@ -7,7 +7,22 @@ const { ObjectId } = mongodb
 
 const PAGE_SIZE = 3
 
+function _buildCriteria(filterBy) {
+  const criteria = {
+    name: { $regex: filterBy.txt, $options: 'i' },
+    $or: [
+      { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
+      { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
+    ],
+    capacity: { $gte: filterBy.guests },
+    type: { $regex: filterBy.type, $options: 'i' }
+
+  }
+  return criteria
+}
+
 async function query(filterBy) {
+  // console.log('filterBy:', filterBy)
   try {
     const criteria = {
       // vendor: { $regex: filterBy.txt, $options: 'i' }
@@ -106,6 +121,8 @@ async function removeStayMsg(stayId, msgId) {
     throw err
   }
 }
+
+
 
 export const stayService = {
   remove,

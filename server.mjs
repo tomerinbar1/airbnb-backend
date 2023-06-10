@@ -14,6 +14,7 @@ app.use(express.json())
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve('public')))
 } else {
+<<<<<<< HEAD
   const corsOptions = {
     origin: [
       'http://127.0.0.1:3000',
@@ -24,22 +25,37 @@ if (process.env.NODE_ENV === 'production') {
     credentials: true,
   }
   app.use(cors(corsOptions))
+=======
+    const corsOptions = {
+        origin: ['http://127.0.0.1:3000',
+            'http://127.0.0.1:3001',
+            'http://localhost:3001',
+            'http://localhost:3000',
+            'http://127.0.0.1:5173',
+            'http://localhost:5173'
+        ],
+        credentials: true
+    }
+    app.use(cors(corsOptions))
+>>>>>>> 00fa5c07a04e18d6b3c72d06f89ef102328bdd48
 }
-
+// routes
 import { authRoutes } from './api/auth/auth.routes.mjs'
 import { userRoutes } from './api/user/user.routes.mjs'
 import { reviewRoutes } from './api/review/review.routes.mjs'
 import { stayRoutes } from './api/stay/stay.routes.mjs'
 import { setupSocketAPI } from './services/socket.service.mjs'
-
-// routes
+import { orderRoutes } from './api/order/order.routes.mjs'
 import { setupAsyncLocalStorage } from './middlewares/setupAls.middleware.mjs'
 app.all('*', setupAsyncLocalStorage)
 
+app.use('/api', stayRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
-app.use('/api/', stayRoutes)
+app.use('/api/order', orderRoutes)
+
+console.log('server')
 setupSocketAPI(server)
 
 // Make every server-side-route to match the index.html
