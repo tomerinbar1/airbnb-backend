@@ -21,7 +21,7 @@ function _buildCriteria(filterBy) {
 }
 
 async function query(filterBy) {
-  console.log('filterBy:', filterBy)
+  // console.log('filterBy:', filterBy)
   try {
     const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('stay')
