@@ -27,21 +27,23 @@ if (process.env.NODE_ENV === 'production') {
     }
     app.use(cors(corsOptions))
 }
-
+// routes
 import { authRoutes } from './api/auth/auth.routes.mjs'
 import { userRoutes } from './api/user/user.routes.mjs'
 import { reviewRoutes } from './api/review/review.routes.mjs'
 import { stayRoutes } from './api/stay/stay.routes.mjs'
 import { setupSocketAPI } from './services/socket.service.mjs'
-
-// routes
+import { orderRoutes } from './api/order/order.routes.mjs'
 import { setupAsyncLocalStorage } from './middlewares/setupAls.middleware.mjs'
 app.all('*', setupAsyncLocalStorage)
 
+app.use('/api', stayRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
-app.use('/api', stayRoutes)
+app.use('/api/order', orderRoutes)
+
+console.log('server')
 setupSocketAPI(server)
 
 // Make every server-side-route to match the index.html

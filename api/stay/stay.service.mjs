@@ -23,7 +23,7 @@ const PAGE_SIZE = 3
 // }
 
 async function query(filterBy) {
-  console.log('filterBy:', filterBy)
+  // console.log('filterBy:', filterBy)
   try {
     const criteria = {
       name: { $regex: filterBy.txt, $options: 'i' },
@@ -41,7 +41,7 @@ async function query(filterBy) {
     // }
 
     const stays = await stayCursor.toArray()
-    console.log('stays:', stays)
+    // console.log('stays:', stays)
     return stays
   } catch (err) {
     logger.error('cannot find stays', err)
