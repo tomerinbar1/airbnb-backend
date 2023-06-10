@@ -34,12 +34,18 @@ async function remove(orderId) {
   try {
     const collection = await dbService.getCollection('order')
     await collection.deleteOne({ _id: ObjectId(orderId) })
+
+    // const collectionUser = await dbService.getCollection('user')
+    // await collection.deleteOne({ _id: ObjectId(orderId) })
+
+
+
     return orderId
   } catch (err) {
     logger.error(`cannot remove order ${orderId}`, err)
     throw err
   }
-}
+} 
 
 async function add(order) {
   try {
