@@ -7,6 +7,7 @@ export async function getStays(req, res) {
     console.log('Getting Stays:')
 
     const filterBy = {
+      type: req.query.type || '',
       txt: req.query.txt || '',
       location: req.query.location || '',
       guests: +req.query.guests || 0,

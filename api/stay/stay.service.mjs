@@ -14,7 +14,8 @@ function _buildCriteria(filterBy) {
       { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
       { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
     ],
-    capacity: { $gte: filterBy.guests }
+    capacity: { $gte: filterBy.guests },
+    type: { $regex: filterBy.type, $options: 'i' }
 
   }
   return criteria
