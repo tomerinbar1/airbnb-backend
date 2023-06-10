@@ -7,33 +7,27 @@ const { ObjectId } = mongodb
 
 const PAGE_SIZE = 3
 
-// function _buildCriteria(filterBy) {
-//   const criteria = {}
-//   if (filterBy.txt) {
-//      criteria.name= { $regex: filterBy.location, $options: 'i' }
-//   }
-//   if(filterBy.location){
-//     criteria['loc.city']= { $regex: filterBy.location, $options: 'i' }
-//     criteria['loc.country']= { $regex: filterBy.location, $options: 'i' }
-//   if (filterBy.guests) {
-//     criteria.capacity = { $lte: filterBy.guests }
-//   }
-//   }
-//   return criteria
-// }
+function _buildCriteria(filterBy) {
+  const criteria = {
+    name: { $regex: filterBy.txt, $options: 'i' },
+    $or: [
+      { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
+      { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
+    ],
+    capacity: { $gte: filterBy.guests },
+    type: { $regex: filterBy.type, $options: 'i' }
+
+  }
+  return criteria
+}
 
 async function query(filterBy) {
   // console.log('filterBy:', filterBy)
   try {
     const criteria = {
-      name: { $regex: filterBy.txt, $options: 'i' },
-      $or: [
-        { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
-        { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
-      ]
-
+      // vendor: { $regex: filterBy.txt, $options: 'i' }
     }
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     var stayCursor = await collection.find(criteria)
 
     // if (filterBy.pageIdx !== undefined) {
@@ -41,7 +35,6 @@ async function query(filterBy) {
     // }
 
     const stays = await stayCursor.toArray()
-    // console.log('stays:', stays)
     return stays
   } catch (err) {
     logger.error('cannot find stays', err)
@@ -51,8 +44,7 @@ async function query(filterBy) {
 
 async function getById(stayId) {
   try {
-
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     const stay = collection.findOne({ _id: ObjectId(stayId) })
     return stay
   } catch (err) {
@@ -63,7 +55,7 @@ async function getById(stayId) {
 
 async function remove(stayId) {
   try {
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     await collection.deleteOne({ _id: ObjectId(stayId) })
     return stayId
   } catch (err) {
@@ -74,7 +66,7 @@ async function remove(stayId) {
 
 async function add(stay) {
   try {
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     await collection.insertOne(stay)
     return stay
   } catch (err) {
@@ -89,7 +81,7 @@ async function update(stay) {
       vendor: stay.vendor,
       price: stay.price,
     }
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
       { _id: ObjectId(stay._id) },
       { $set: stayToSave }
@@ -104,7 +96,7 @@ async function update(stay) {
 async function addStayMsg(stayId, msg) {
   try {
     msg.id = utilService.makeId()
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
       { _id: ObjectId(stayId) },
       { $push: { msgs: msg } }
@@ -118,7 +110,7 @@ async function addStayMsg(stayId, msg) {
 
 async function removeStayMsg(stayId, msgId) {
   try {
-    const collection = await dbService.getCollection('stay')
+    const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
       { _id: ObjectId(stayId) },
       { $pull: { msgs: { id: msgId } } }
