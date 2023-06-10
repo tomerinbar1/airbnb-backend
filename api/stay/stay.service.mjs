@@ -7,32 +7,23 @@ const { ObjectId } = mongodb
 
 const PAGE_SIZE = 3
 
-// function _buildCriteria(filterBy) {
-//   const criteria = {}
-//   if (filterBy.txt) {
-//      criteria.name= { $regex: filterBy.location, $options: 'i' }
-//   }
-//   if(filterBy.location){
-//     criteria['loc.city']= { $regex: filterBy.location, $options: 'i' }
-//     criteria['loc.country']= { $regex: filterBy.location, $options: 'i' }
-//   if (filterBy.guests) {
-//     criteria.capacity = { $lte: filterBy.guests }
-//   }
-//   }
-//   return criteria
-// }
+function _buildCriteria(filterBy) {
+  const criteria = {
+    name: { $regex: filterBy.txt, $options: 'i' },
+    $or: [
+      { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
+      { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
+    ],
+    capacity: { $gte: filterBy.guests }
+
+  }
+  return criteria
+}
 
 async function query(filterBy) {
   console.log('filterBy:', filterBy)
   try {
-    const criteria = {
-      name: { $regex: filterBy.txt, $options: 'i' },
-      $or: [
-        { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
-        { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
-      ]
-
-    }
+    const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('stay')
     var stayCursor = await collection.find(criteria)
 
@@ -41,7 +32,6 @@ async function query(filterBy) {
     // }
 
     const stays = await stayCursor.toArray()
-    console.log('stays:', stays)
     return stays
   } catch (err) {
     logger.error('cannot find stays', err)
