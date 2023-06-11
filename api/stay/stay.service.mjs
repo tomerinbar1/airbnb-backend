@@ -20,8 +20,7 @@ function _buildCriteria(filterBy) {
   }
   return criteria
 }
-async function query(filterBy) {
-  // console.log('filterBy:', filterBy)
+async function query(filterBy) {n
   try {
     const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('stay_collection')
@@ -38,25 +37,6 @@ async function query(filterBy) {
     throw err
   }
 }
-// async function query(filterBy) {
-//   // console.log('filterBy:', filterBy)
-//   try {
-//     const criteria = {
-//     }
-//     const collection = await dbService.getCollection('stay_collection')
-//     var stayCursor = await collection.find(criteria)
-
-//     // if (filterBy.pageIdx !== undefined) {
-//     //   stayCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
-//     // }
-
-//     const stays = await stayCursor.toArray()
-//     return stays
-//   } catch (err) {
-//     logger.error('cannot find stays', err)
-//     throw err
-//   }
-// }
 
 async function getById(stayId) {
   try {
