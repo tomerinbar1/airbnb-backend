@@ -39,7 +39,7 @@ async function remove(orderId) {
     logger.error(`cannot remove order ${orderId}`, err)
     throw err
   }
-}
+} 
 
 async function add(order) {
   try {

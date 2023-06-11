@@ -14,7 +14,6 @@ app.use(express.json())
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve('public')))
 } else {
-<<<<<<< HEAD
   const corsOptions = {
     origin: [
       'http://127.0.0.1:3000',
@@ -25,19 +24,6 @@ if (process.env.NODE_ENV === 'production') {
     credentials: true,
   }
   app.use(cors(corsOptions))
-=======
-    const corsOptions = {
-        origin: ['http://127.0.0.1:3000',
-            'http://127.0.0.1:3001',
-            'http://localhost:3001',
-            'http://localhost:3000',
-            'http://127.0.0.1:5173',
-            'http://localhost:5173'
-        ],
-        credentials: true
-    }
-    app.use(cors(corsOptions))
->>>>>>> 00fa5c07a04e18d6b3c72d06f89ef102328bdd48
 }
 // routes
 import { authRoutes } from './api/auth/auth.routes.mjs'
