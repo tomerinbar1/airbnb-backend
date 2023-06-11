@@ -12,11 +12,10 @@ function _buildCriteria(filterBy) {
     name: { $regex: filterBy.txt, $options: 'i' },
     $or: [
       { 'loc.city': { $regex: filterBy.location, $options: 'i' } },
-      { 'loc.country': { $regex: filterBy.location, $options: 'i' } }
+      { 'loc.country': { $regex: filterBy.location, $options: 'i' } },
     ],
     capacity: { $gte: filterBy.guests },
-    type: { $regex: filterBy.type, $options: 'i' }
-
+    type: { $regex: filterBy.type, $options: 'i' },
   }
   return criteria
 }
@@ -121,8 +120,6 @@ async function removeStayMsg(stayId, msgId) {
     throw err
   }
 }
-
-
 
 export const stayService = {
   remove,
