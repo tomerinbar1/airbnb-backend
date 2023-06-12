@@ -73,7 +73,21 @@ async function add(stay) {
 async function update(stay) {
   try {
     const stayToSave = {
-   
+      _id: stay._id,
+      name: stay.name,
+      type: stay.type,
+      imgUrls: stay.imgUrls,
+      price: stay.price,
+      summary: stay.summary,
+      capacity: stay.capacity,
+      bathrooms: stay.bathrooms,
+      bedrooms: stay.bedrooms,
+      roomType: stay.roomType,
+      host: stay.host,
+      loc: stay.loc,
+      reviews: stay.reviews,
+      likedByUsers: stay.likedByUsers,
+      amenities: stay.amenities
     }
     const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
@@ -88,42 +102,6 @@ async function update(stay) {
 }
 
 
-// _id
-// 6484f1d4627008eb29ef8e0e
-// name
-// "Westin Kaanapali KORVN 2BR"
-// type
-// "National parks"
-
-// imgUrls
-// Array
-// price
-// 595
-// summary
-// "Westin Kaanapali Ocean Resort Villas North timeshare - Pay resort: $14…"
-// capacity
-// 8
-// bathrooms
-// 2
-// bedrooms
-// 2
-// roomType
-// "Entire home/apt"
-
-// host
-// Object
-
-// loc
-// Object
-
-// reviews
-// Array
-
-// likedByUsers
-// Array
-
-// amenities
-// Array
 
 
 async function addStayMsg(stayId, msg) {
