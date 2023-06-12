@@ -6,10 +6,15 @@ import mongodb from 'mongodb'
 const { ObjectId } = mongodb
 
 
-async function query() {
+async function query(filterBy) {
+
+  const criteria = {}
+  if (filterBy.status) criteria.status = filterBy.status
+
   try {
     const collection = await dbService.getCollection('order')
-    const orders = await collection.toArray()
+    const orders = await collection.find(criteria).toArray()
+    // const orders = await collection.toArray()
     console.log('orders:', orders)
     return orders
   } catch (err) {
@@ -39,7 +44,7 @@ async function remove(orderId) {
     logger.error(`cannot remove order ${orderId}`, err)
     throw err
   }
-} 
+}
 
 async function add(order) {
   try {

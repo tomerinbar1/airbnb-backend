@@ -16,7 +16,6 @@ function _buildCriteria(filterBy) {
     ],
     capacity: { $gte: filterBy.guests },
     type: { $regex: filterBy.type, $options: 'i' }
-
   }
   return criteria
 }
