@@ -6,8 +6,6 @@ export async function getOrders(req, res) {
     const filterBy = req.query.status ? { status: req.query.status } : ""
 
     logger.debug('Getting Orders:', req.query)
-    console.log('Getting Orders:')
-    console.log('req.query:', req.query)
     const orders = await orderService.query(filterBy)
     res.json(orders)
   } catch (err) {
@@ -47,7 +45,9 @@ export async function addOrder(req, res) {
 export async function updateOrder(req, res) {
   try {
     const order = req.body
+    console.log('order from controller', order)
     const updatedOrder = await orderService.update(order)
+    console.log('updatedOrder from controller', updatedOrder)
     res.json(updatedOrder)
   } catch (err) {
     logger.error('Failed to update order', err)

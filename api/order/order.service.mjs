@@ -58,11 +58,9 @@ async function add(order) {
 }
 
 async function update(order) {
+  console.log('order from service', order)
   try {
-    const orderToSave = {
-      vendor: order.vendor,
-      price: order.price,
-    }
+    const orderToSave = setOrderToSave(order)
     const collection = await dbService.getCollection('order')
     await collection.updateOne(
       { _id: ObjectId(order._id) },
@@ -70,7 +68,7 @@ async function update(order) {
     )
     return order
   } catch (err) {
-    logger.error(`cannot update order ${orderId}`, err)
+    logger.error(`cannot update order ${order._id}`, err)
     throw err
   }
 }
@@ -102,6 +100,19 @@ async function removeOrderMsg(orderId, msgId) {
     logger.error(`cannot add order msg ${orderId}`, err)
     throw err
   }
+}
+
+function setOrderToSave(order) {
+  const orderToSave = {
+    status: order.status,
+    createdAt: order.createdAt,
+    buyer: order.buyer,
+    seller: order.seller,
+    totalPrice: order.totalPrice,
+    items: order.items,
+    msgs: order.msgs,
+  }
+  return orderToSave
 }
 
 
