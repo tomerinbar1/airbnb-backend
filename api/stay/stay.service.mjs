@@ -20,7 +20,7 @@ function _buildCriteria(filterBy) {
   }
   return criteria
 }
-async function query(filterBy) {n
+async function query(filterBy) {
   try {
     const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('stay_collection')
@@ -74,8 +74,7 @@ async function add(stay) {
 async function update(stay) {
   try {
     const stayToSave = {
-      vendor: stay.vendor,
-      price: stay.price,
+   
     }
     const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
@@ -88,6 +87,45 @@ async function update(stay) {
     throw err
   }
 }
+
+
+// _id
+// 6484f1d4627008eb29ef8e0e
+// name
+// "Westin Kaanapali KORVN 2BR"
+// type
+// "National parks"
+
+// imgUrls
+// Array
+// price
+// 595
+// summary
+// "Westin Kaanapali Ocean Resort Villas North timeshare - Pay resort: $14…"
+// capacity
+// 8
+// bathrooms
+// 2
+// bedrooms
+// 2
+// roomType
+// "Entire home/apt"
+
+// host
+// Object
+
+// loc
+// Object
+
+// reviews
+// Array
+
+// likedByUsers
+// Array
+
+// amenities
+// Array
+
 
 async function addStayMsg(stayId, msg) {
   try {
