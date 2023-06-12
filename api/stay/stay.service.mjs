@@ -73,8 +73,21 @@ async function add(stay) {
 async function update(stay) {
   try {
     const stayToSave = {
-      vendor: stay.vendor,
+      _id: stay._id,
+      name: stay.name,
+      type: stay.type,
+      imgUrls: stay.imgUrls,
       price: stay.price,
+      summary: stay.summary,
+      capacity: stay.capacity,
+      bathrooms: stay.bathrooms,
+      bedrooms: stay.bedrooms,
+      roomType: stay.roomType,
+      host: stay.host,
+      loc: stay.loc,
+      reviews: stay.reviews,
+      likedByUsers: stay.likedByUsers,
+      amenities: stay.amenities
     }
     const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
@@ -87,6 +100,9 @@ async function update(stay) {
     throw err
   }
 }
+
+
+
 
 async function addStayMsg(stayId, msg) {
   try {

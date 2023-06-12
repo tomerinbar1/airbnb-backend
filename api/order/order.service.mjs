@@ -122,7 +122,5 @@ export const orderService = {
   query,
   getById,
   add,
-  update,
-  addOrderMsg,
-  removeOrderMsg,
+  update
 }
