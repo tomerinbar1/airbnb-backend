@@ -16,11 +16,10 @@ function _buildCriteria(filterBy) {
     ],
     capacity: { $gte: filterBy.guests },
     type: { $regex: filterBy.type, $options: 'i' }
-
   }
   return criteria
 }
-async function query(filterBy) {n
+async function query(filterBy) {
   try {
     const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('stay_collection')
