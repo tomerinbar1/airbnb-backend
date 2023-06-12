@@ -1,8 +1,10 @@
-import {logger} from '../../services/logger.service.mjs'
+import { logger } from '../../services/logger.service.mjs'
 import { orderService } from './order.service.mjs'
 
 export async function getOrders(req, res) {
   try {
+    const filterBy = req.query.status ? { status: req.query.status } : ""
+
     logger.debug('Getting Orders:', req.query)
     console.log('Getting Orders:')
     console.log('req.query:', req.query)
@@ -20,7 +22,7 @@ export async function getOrderById(req, res) {
     console.log('orderId:', orderId)
     const order = await orderService.getById(orderId)
     res.json(order)
-    console.log('order from controller' , order)
+    console.log('order from controller', order)
   } catch (err) {
     logger.error('Failed to get order', err)
     res.status(400).send({ err: 'Failed to get order' })
@@ -28,7 +30,7 @@ export async function getOrderById(req, res) {
 }
 
 export async function addOrder(req, res) {
-  const {loggedinUser} = req
+  const { loggedinUser } = req
 
   try {
     const order = req.body
@@ -66,7 +68,7 @@ export async function removeOrder(req, res) {
 }
 
 export async function addOrderMsg(req, res) {
-  const {loggedinUser} = req
+  const { loggedinUser } = req
   try {
     const orderId = req.params.id
     const msg = {
@@ -83,10 +85,10 @@ export async function addOrderMsg(req, res) {
 }
 
 export async function removeOrderMsg(req, res) {
-  const {loggedinUser} = req
+  const { loggedinUser } = req
   try {
     const orderId = req.params.id
-    const {msgId} = req.params
+    const { msgId } = req.params
 
     const removedId = await orderService.removeOrderMsg(orderId, msgId)
     res.send(removedId)

@@ -35,11 +35,11 @@ import { orderRoutes } from './api/order/order.routes.mjs'
 import { setupAsyncLocalStorage } from './middlewares/setupAls.middleware.mjs'
 app.all('*', setupAsyncLocalStorage)
 
-app.use('/api', stayRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
 app.use('/api/order', orderRoutes)
+app.use('/api', stayRoutes)
 
 console.log('server')
 setupSocketAPI(server)

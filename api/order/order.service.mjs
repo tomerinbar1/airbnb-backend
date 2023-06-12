@@ -6,10 +6,15 @@ import mongodb from 'mongodb'
 const { ObjectId } = mongodb
 
 
-async function query() {
+async function query(filterBy) {
+
+  const criteria = {}
+  if (filterBy.status) criteria.status = filterBy.status
+
   try {
     const collection = await dbService.getCollection('order')
-    const orders = await collection.toArray()
+    const orders = await collection.find(criteria).toArray()
+    // const orders = await collection.toArray()
     console.log('orders:', orders)
     return orders
   } catch (err) {
@@ -39,7 +44,7 @@ async function remove(orderId) {
     logger.error(`cannot remove order ${orderId}`, err)
     throw err
   }
-} 
+}
 
 async function add(order) {
   try {
@@ -55,8 +60,20 @@ async function add(order) {
 async function update(order) {
   try {
     const orderToSave = {
-      vendor: order.vendor,
-      price: order.price,
+      stayId:order.stayId,
+      stayName: order.stayName,
+      hostId:order.hostId,
+      guests: order.guests,
+      startDate: order.startDate,
+      endDate: order.endDate,
+      nightsPrice: order.nightsPrice,
+      cleaningFee:order.cleaningFee,
+      serviceFee:order.serviceFee,
+      totalPrice:order.totalPrice,
+      msgs: order.msgs,
+      status: order.status,
+      renter: order.renter,
+      createdAt: order.createdAt
     }
     const collection = await dbService.getCollection('order')
     await collection.updateOne(
@@ -65,36 +82,7 @@ async function update(order) {
     )
     return order
   } catch (err) {
-    logger.error(`cannot update order ${orderId}`, err)
-    throw err
-  }
-}
-
-async function addOrderMsg(orderId, msg) {
-  try {
-    msg.id = utilService.makeId()
-    const collection = await dbService.getCollection('order')
-    await collection.updateOne(
-      { _id: ObjectId(orderId) },
-      { $push: { msgs: msg } }
-    )
-    return msg
-  } catch (err) {
-    logger.error(`cannot add order msg ${orderId}`, err)
-    throw err
-  }
-}
-
-async function removeOrderMsg(orderId, msgId) {
-  try {
-    const collection = await dbService.getCollection('order')
-    await collection.updateOne(
-      { _id: ObjectId(orderId) },
-      { $pull: { msgs: { id: msgId } } }
-    )
-    return msgId
-  } catch (err) {
-    logger.error(`cannot add order msg ${orderId}`, err)
+    logger.error(`cannot update order ${order._id}`, err)
     throw err
   }
 }
@@ -106,7 +94,5 @@ export const orderService = {
   query,
   getById,
   add,
-  update,
-  addOrderMsg,
-  removeOrderMsg,
+  update
 }

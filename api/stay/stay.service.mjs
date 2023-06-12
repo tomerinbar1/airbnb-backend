@@ -15,12 +15,11 @@ function _buildCriteria(filterBy) {
       { 'loc.country': { $regex: filterBy.location, $options: 'i' } },
     ],
     capacity: { $gte: filterBy.guests },
-    type: { $regex: filterBy.type, $options: 'i' },
+    type: { $regex: filterBy.type, $options: 'i' }
   }
   return criteria
 }
 async function query(filterBy) {
-  // console.log('filterBy:', filterBy)
   try {
     const criteria = _buildCriteria(filterBy)
     const collection = await dbService.getCollection('stay_collection')
@@ -37,25 +36,6 @@ async function query(filterBy) {
     throw err
   }
 }
-// async function query(filterBy) {
-//   // console.log('filterBy:', filterBy)
-//   try {
-//     const criteria = {
-//     }
-//     const collection = await dbService.getCollection('stay_collection')
-//     var stayCursor = await collection.find(criteria)
-
-//     // if (filterBy.pageIdx !== undefined) {
-//     //   stayCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
-//     // }
-
-//     const stays = await stayCursor.toArray()
-//     return stays
-//   } catch (err) {
-//     logger.error('cannot find stays', err)
-//     throw err
-//   }
-// }
 
 async function getById(stayId) {
   try {
@@ -93,8 +73,7 @@ async function add(stay) {
 async function update(stay) {
   try {
     const stayToSave = {
-      vendor: stay.vendor,
-      price: stay.price,
+   
     }
     const collection = await dbService.getCollection('stay_collection')
     await collection.updateOne(
@@ -107,6 +86,45 @@ async function update(stay) {
     throw err
   }
 }
+
+
+// _id
+// 6484f1d4627008eb29ef8e0e
+// name
+// "Westin Kaanapali KORVN 2BR"
+// type
+// "National parks"
+
+// imgUrls
+// Array
+// price
+// 595
+// summary
+// "Westin Kaanapali Ocean Resort Villas North timeshare - Pay resort: $14…"
+// capacity
+// 8
+// bathrooms
+// 2
+// bedrooms
+// 2
+// roomType
+// "Entire home/apt"
+
+// host
+// Object
+
+// loc
+// Object
+
+// reviews
+// Array
+
+// likedByUsers
+// Array
+
+// amenities
+// Array
+
 
 async function addStayMsg(stayId, msg) {
   try {
