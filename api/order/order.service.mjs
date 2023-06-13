@@ -58,23 +58,9 @@ async function add(order) {
 }
 
 async function update(order) {
+  console.log('order from service', order)
   try {
-    const orderToSave = {
-      stayId:order.stayId,
-      stayName: order.stayName,
-      hostId:order.hostId,
-      guests: order.guests,
-      startDate: order.startDate,
-      endDate: order.endDate,
-      nightsPrice: order.nightsPrice,
-      cleaningFee:order.cleaningFee,
-      serviceFee:order.serviceFee,
-      totalPrice:order.totalPrice,
-      msgs: order.msgs,
-      status: order.status,
-      renter: order.renter,
-      createdAt: order.createdAt
-    }
+    const orderToSave = setOrderToSave(order)
     const collection = await dbService.getCollection('order')
     await collection.updateOne(
       { _id: ObjectId(order._id) },
@@ -85,6 +71,48 @@ async function update(order) {
     logger.error(`cannot update order ${order._id}`, err)
     throw err
   }
+}
+
+async function addOrderMsg(orderId, msg) {
+  try {
+    msg.id = utilService.makeId()
+    const collection = await dbService.getCollection('order')
+    await collection.updateOne(
+      { _id: ObjectId(orderId) },
+      { $push: { msgs: msg } }
+    )
+    return msg
+  } catch (err) {
+    logger.error(`cannot add order msg ${orderId}`, err)
+    throw err
+  }
+}
+
+async function removeOrderMsg(orderId, msgId) {
+  try {
+    const collection = await dbService.getCollection('order')
+    await collection.updateOne(
+      { _id: ObjectId(orderId) },
+      { $pull: { msgs: { id: msgId } } }
+    )
+    return msgId
+  } catch (err) {
+    logger.error(`cannot add order msg ${orderId}`, err)
+    throw err
+  }
+}
+
+function setOrderToSave(order) {
+  const orderToSave = {
+    status: order.status,
+    createdAt: order.createdAt,
+    buyer: order.buyer,
+    seller: order.seller,
+    totalPrice: order.totalPrice,
+    items: order.items,
+    msgs: order.msgs,
+  }
+  return orderToSave
 }
 
 
