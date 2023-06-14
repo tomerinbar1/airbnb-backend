@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.3ebfea6e.css",
-    "main.js": "/static/js/main.cef53793.js",
+    "main.css": "/static/css/main.d2d1d85f.css",
+    "main.js": "/static/js/main.1f186087.js",
     "static/js/787.9239aff2.chunk.js": "/static/js/787.9239aff2.chunk.js",
     "static/media/Montserrat-VariableFont_weight.ttf": "/static/media/Montserrat-VariableFont_weight.3faa3eef13649db02044.ttf",
     "static/media/Montserrat-SemiBold.ttf": "/static/media/Montserrat-SemiBold.d5e0cc788cba9ced1fb9.ttf",
@@ -116,6 +116,7 @@
     "static/media/wifi.svg": "/static/media/wifi.e431ab8c916cf314c9ac.svg",
     "static/media/garden.svg": "/static/media/garden.83933328f116c666c8b3.svg",
     "static/media/airbnb.svg": "/static/media/airbnb.7db0a766a93aad4b22a28f6b13d624bf.svg",
+    "static/media/priceTag.svg": "/static/media/priceTag.2ca05faccb4ddfd5591d8da6e8c1cf08.svg",
     "static/media/carbon.svg": "/static/media/carbon.9f4b2e4b4e3b5ec56a61.svg",
     "static/media/whatsapp.svg": "/static/media/whatsapp.460d743feb1e80c412acbd63f21872c8.svg",
     "static/media/private-hot-tub.svg": "/static/media/private-hot-tub.2f0ed1fc974eaf9ecb51.svg",
@@ -149,12 +150,12 @@
     "static/media/share.svg": "/static/media/share.7348e0e0b89706b67cf9b700a66398f2.svg",
     "static/media/goback.svg": "/static/media/goback.52903aef010308098b4ba280f5dc8a0d.svg",
     "static/media/close.svg": "/static/media/close.695f448a68247931c89e758d262eab0c.svg",
-    "main.3ebfea6e.css.map": "/static/css/main.3ebfea6e.css.map",
-    "main.cef53793.js.map": "/static/js/main.cef53793.js.map",
+    "main.d2d1d85f.css.map": "/static/css/main.d2d1d85f.css.map",
+    "main.1f186087.js.map": "/static/js/main.1f186087.js.map",
     "787.9239aff2.chunk.js.map": "/static/js/787.9239aff2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3ebfea6e.css",
-    "static/js/main.cef53793.js"
+    "static/css/main.d2d1d85f.css",
+    "static/js/main.1f186087.js"
   ]
 }
